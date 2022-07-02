@@ -2,14 +2,19 @@ package product
 
 import (
 	"errors"
+	"go-tg-bot/internal/interfaces"
 	"log"
 	"math"
 )
 
-type Service struct{}
+type Service struct {
+	repo interfaces.Repository
+}
 
-func NewService() *Service {
-	return &Service{}
+func NewService(repo interfaces.Repository) *Service {
+	return &Service{
+		repo: repo,
+	}
 }
 
 func (service *Service) List(offset uint, limit uint) ([]Product, error) {

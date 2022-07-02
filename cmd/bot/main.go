@@ -54,13 +54,13 @@ func run() error {
 	defer dbClient.Close()
 
 	// repository
-	_ = repository.NewRepository(dbClient, logger)
+	repo := repository.NewRepository(dbClient, logger)
 
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 	updates := bot.GetUpdatesChan(u)
 
-	productService := product.NewService()
+	productService := product.NewService(repo)
 	paginationService := pagination.NewPagination(productService)
 	commander := commands.NewCommander(bot, productService, paginationService)
 
